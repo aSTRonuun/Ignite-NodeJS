@@ -1,0 +1,13 @@
+Métodos HTTP
+
+    - GET: Buca uma informação dentro do servidor
+    - POST: Inserir uma informação dentro do servidor
+    - PUT: Alterar uma inforamação no servidor
+    - PATCH: Alterar uma inforamçaõ específica dentro do servidor
+    - DELETE: Deletar uma informação no servidor
+
+Tipos de parâmetros:	    
+
+    Route Params => Identificar um recurso buscar/editar/deletar
+    Query Params => Paginação / Filtros / Ordenação
+    Body Params => Os objetos inserção/alteração (JSON)
