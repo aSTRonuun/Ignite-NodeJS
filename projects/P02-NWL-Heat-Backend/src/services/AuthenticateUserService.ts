@@ -1,6 +1,6 @@
-import { getPrismaClient } from "@prisma/client/runtime";
 import axios from "axios";
 import prismaClient from "../prisma/index";
+import { sign } from "jsonwebtoken"
 
 /**
  * Receber code(string)
@@ -22,8 +22,6 @@ interface IUserResponse {
     id: number,
     name: string,
 }
-
-
 
 class AuthenticateUserService {
     async execute(code: string) {
@@ -55,18 +53,32 @@ class AuthenticateUserService {
         })
 
         if(!user) {
-            await prismaClient.user.create({
+            user = await prismaClient.user.create({
                 data: {
                     github_id: id,
                     login,
                     avatar_url,
                     name,
-
-                }
-            })
+                },
+            });
         }
+
+        const token = sign(
+            {
+                user: {
+                    name: user.name,
+                    avatar_ur: user.avatar_url,
+                    id: user.id,
+                },
+            },
+            process.env.JWT_SECRET as string,
+            {
+                subject: user.id,
+                expiresIn: "1d",
+            }
+        );
         
-        return response.data;
+        return { token, user };
     }
 }
 
