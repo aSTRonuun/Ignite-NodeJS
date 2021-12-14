@@ -7,9 +7,11 @@ export class CreateCategoryController {
     
         const service = new CreateCategoryService();
 
+        console.log("veio ate aqui-----------");
+
         const result = await service.execute({ name, description });
 
-        console.log("veio ate aqui-----------");
+        
 
         if(result instanceof Error) {
             return response.status(400).json(result.message);
